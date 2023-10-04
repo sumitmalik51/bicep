@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus"
+    },
+    "resourcePrefix": {
+      "value": "myresourceprefix"
+    },
+    "aspSku": {
+      "value": "P1V2"
+    },
+    "aspTier": {
+      "value": "Premium"
+    },
+    "aspKind": {
+      "value": "Linux"
+    },
+    "frontDoorSku": {
+      "value": "Standard_AzureFrontDoor"
+    },
+    "enabledForTemplateDeployment": {
+      "value": true
+    },
+    "enableRbacAuthorization": {
+      "value": true
+    },
+    "enableSoftDelete": {
+      "value": true
+    },
+    "publicNetworkAccess": {
+      "value": "Enabled"
+    },
+    "kvSku": {
+      "value": "standard"
+    },
+    "kvSkuFamily": {
+      "value": "A"
+    },
+    "existingVnet": {
+      "value": ""
+    },
+    "existingPrivateDnsZoneKeyvault": {
+      "value": ""
+    },
+    "existingPrivateDnsZoneDb": {
+      "value": ""
+    },
+    "existingManagedIdentityCms": {
+      "value": ""
+    },
+    "persistentResourceGroup": {
+      "value": "my-persistent-resource-group"
+    },
+    "websiteContainerImage": {
+      "value": "mywebsitecontainerimage:latest"
+    }
+  }
+}
+

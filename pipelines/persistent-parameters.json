@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus"
+    },
+    "tenantId": {
+      "value": "<tenant-id>"
+    },
+    "resourcePrefix": {
+      "value": "mywebsite"
+    },
+    "appServicePlanId": {
+      "value": "/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Web/serverfarms/myasp"
+    },
+    "frontDoorId": {
+      "value": "/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Network/frontDoors/myfrontdoor"
+    },
+    "cmsHostName": {
+      "value": "<cms-host-name>"
+    },
+    "persistentResourceGroup": {
+      "value": "<persistent-resource-group>"
+    },
+    "websiteContainerImage": {
+      "value": "<website-container-image>"
+    },
+    "httpsOnly": {
+      "value": true
+    },
+    "acrUseManagedIdentityCreds": {
+      "value": true
+    },
+    "alwaysOn": {
+      "value": true
+    },
+    "detailedErrorLoggingEnabled": {
+      "value": true
+    },
+    "httpLoggingEnabled": {
+      "value": true
+    },
+    "requestTracingEnabled": {
+      "value": true
+    },
+    "ftpsState": {
+      "value": "Disabled"
+    },
+    "http20Enabled": {
+      "value": true
+    },
+    "enabledForTemplateDeployment": {
+      "value": true
+    },
+    "enableRbacAuthorization": {
+      "value": true
+    },
+    "enableSoftDelete": {
+      "value": true
+    },
+    "publicNetworkAccess": {
+      "value": "Disabled"
+    },
+    "kvSku": {
+      "value": "standard"
+    },
+    "kvSkuFamily": {
+      "value": "A"
+    }
+  }
+}
+

@@ -1,0 +1,33 @@
+# Pipeline to spin up persistent level infrastructure components which will later be used by the application components
+trigger:
+  - none
+
+variables:
+  VM_IMAGE_NAME: "ubuntu-latest"
+  PERSISTENT_RESOURCE_GROUP_NAME: "persistent" 
+  BRANCH_NAME_MAX_LENGTH: 15 # Define maxBranchNameLength here
+
+
+stages:
+  - stage: check_and_execute
+    jobs:
+      - template: .\pipelines\check-branch-name.yml  # Reference the template file
+        parameters:
+          BRANCH_NAME_MAX_LENGTH: $(BRANCH_NAME_MAX_LENGTH)
+
+  - stage: deploy_persistent
+    displayName: Build persistent level infrastructure
+    jobs:
+      - job: deploy
+        displayName: Deploy
+        pool:
+          vmImage: $(VM_IMAGE_NAME)
+        steps:
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: "UKSC-Dev(1a2d3dc2-61ba-40ef-ae6b-e100ba1f560f)"
+              scriptType: "bash"
+              scriptLocation: "inlineScript"
+              inlineScript: |
+                az group create --name $(PERSISTENT_RESOURCE_GROUP_NAME) --location uksouth
+                az deployment group create --resource-group $(PERSISTENT_RESOURCE_GROUP_NAME) --template-file persistent.bicep 

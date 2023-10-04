@@ -1,0 +1,59 @@
+parameters:
+  - name: BRANCH_NAME_MAX_LENGTH
+    type: string
+
+
+jobs:
+  - job: CheckBranchName
+    displayName: 'Check Branch Name and length'
+    
+    steps:
+      - task: Bash@3
+        displayName: 'Check Branch Name Convention and Length'
+        inputs:
+          targetType: inline
+          script: |
+           #!/bin/bash
+
+
+            # Define a function to log errors and exit with a non-zero status code
+            function log_error {
+              echo "##vso[task.logissue type=error]$1"
+              exit 1
+            }
+
+
+            # Get the branch name from BUILD_SOURCEBRANCH
+            BRANCH="${BUILD_SOURCEBRANCH##refs/heads/}"
+
+
+            # Check if the branch name follows the convention
+            case $BRANCH in
+              main) ;; # Allow main branch.
+              refs-*) ;; # PRs, merges, tags, etc.
+              r-*) ;;
+              b-*) ;;
+              h-*) ;;
+              f-*) ;;
+              *)
+                log_error "Branch name [$BRANCH] does not follow convention: [r-* for release branches | b-* for bugfix branches | h-* for hotfix branches | f-* for feature branches]."
+                ;;
+            esac
+
+
+            # Check if the branch name length exceeds the maximum
+            if [ ${#BRANCH} -gt $BRANCH_NAME_MAX_LENGTH ]; then
+              log_error "Branch name '$BRANCH' exceeds the maximum length of $BRANCH_NAME_MAX_LENGTH characters."
+            fi
+
+
+            # Check if the branch name is empty
+            if [ -z "${BRANCH}" ]; then
+              log_error "Failed to determine branch name from BUILD_SOURCEBRANCH."
+            fi
+
+
+            # Suppress the warning by sending it to null (discard)
+            if [ -n "${BRANCH}" ]; then
+              echo "##vso[task.logissue type=warning]Branch name [$BRANCH] is valid." > /dev/null
+            fi
